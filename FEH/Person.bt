@@ -26,11 +26,13 @@ string LegendaryElementRead(byte b)
 
 typedef struct
 {
+    CryptStr duo_skill_id;
     STATS bonus_effect;
+    XORED8 kind(0x21);
     byte element<read=LegendaryElementRead>;
     XORED8 bst(0x0F);
-    XORED8 is_duel(0x80);
-    FSkip(5);
+    XORED8 pair_up(0x80);
+    FSkip(4);
 }LegendaryInfo;
 
 typedef struct
