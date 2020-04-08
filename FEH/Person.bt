@@ -41,26 +41,28 @@ typedef struct
 
 typedef struct
 {
-    CryptStr id;
-    CryptStr name_romance;
-    CryptStr face;
-    CryptStr face2;
+    CryptStr id_tag;
+    CryptStr roman;
+    CryptStr face_name;
+    CryptStr face_name2;
     int64 legendary_bonus; // Not completed yet
-    XORED64 timestamp(0xBDc1E742E9B6489B); // Not important, so not decoded;
-    XORED32 internal_id(0x5F6E4E18);
+    XORED64 timestamp(0xBDC1E742E9B6489B);
+    XORED32 id_num(0x5F6E4E18);
     XORED32 sort_value(0x2A80349B);
+    XORED32 origins(0xE664B808)<format=binary>;
     byte weapon_type<read=WeaponTypeRead>;
     byte tome_class<read=TomeClassRead>;//Purpose unkown
-    byte move<read=MoveRead>;
-    byte origin<hidden=true>; //0x43
-    XORED8 summonable(0xA1);
-    XORED8 permanent(0xC7);
+    byte move_type<read=MoveRead>;
+    XORED8 series(0x43);
+    XORED8 regular_hero(0xA1);
+    XORED8 permanent_hero(0xC7);
     XORED8 base_vector_id(0x3D);
-    XORED8 is_refresher(0xFF);
-    byte unkown<hidden=true>;
-    FSkip(7);
+    XORED8 refresher(0xFF);
+    XORED8 dragonflowers(0xE4);
+    byte unknown1<hidden=true>;
+    FSkip(6);
     STATS base_stats;
-    STATS grow;
+    STATS growth_rates;
     Skills skills;
 } Person<read = PersonRead>;
 
@@ -71,16 +73,22 @@ string PersonRead(Person &p)
 
 string WeaponTypeRead(byte b)
 {
-    enum {Sword, Lance, Axr, RedBow, BlueBow, GreenBow, ColorlessBow, RedDagger, BlueDagger,
-    GreedDagger, Dagger, RedTome, BlueTome, GreenTome, Staff, RedBreath, BlueBreath, GreenBreath,
-    ColorlessBreath, RedBeast, BlueBeast, GreenBeast, ColorlessBeast} wps;
+    enum {
+        Sword, Lance, Axe,
+        RedBow, BlueBow, GreenBow, ColorlessBow,
+        RedDagger, BlueDagger, GreenDagger, ColorlessDagger,
+        RedTome, BlueTome, GreenTome, ColorlessTome,
+        Staff,
+        RedBreath, BlueBreath, GreenBreath, ColorlessBreath,
+        RedBeast, BlueBeast, GreenBeast, ColorlessBeast,
+    } wps;
     wps = b^0x06;
     return EnumToString(wps);
 }
 
 string TomeClassRead(byte b)
 {
-    enum {None, Fire, Thunder, Wind, Light, Dark} element;
+    enum {None, Fire, Thunder, Wind, Light, Dark, Earth} element;
     element = b^0x35;
     return EnumToString(element);
 }
