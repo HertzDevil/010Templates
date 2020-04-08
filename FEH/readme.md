@@ -27,4 +27,4 @@
 ## Some Explanations
 - The first 4 bytes of a .bin.lz file are only relevant for decrypt/encrypt and have nothing to do with the file content.
 - Most of the values in .bin are xor encrypted, their xor key can be seen in the template file
-- Skill timing/ability/limit ids: https://feheroes.gamepedia.com/User:HertzDevil/Internal_skill_effects#SkillAbility
+- Skill timing/ability/limit ids: https://feheroes.gamepedia.com/User:HertzDevil/Skill_effect_tags
